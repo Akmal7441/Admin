@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="row justify-content-start">
+        <div class="col-md-4">
+            <form action="/admins/add" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="adminposition">Admin position</label>
+                        <input type="text" class="form-control" name="adminposition" id="adminposition"
+                            placeholder="adminposition">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminName">Admin name</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="text" class="form-control" id="adminName" name="adminName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminImg">Admin Img</label>
+                        <input type="text" class="form-control" name="adminImg" id="adminImg"
+                            placeholder="adminImg">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminAbout">About Admin</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="text" class="form-control" id="adminAbout" name="adminAbout">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPhone">Admin phone</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="Number" class="form-control" id="adminPhone" name="adminPhone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
