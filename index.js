@@ -2,8 +2,17 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const { create } = require('express-handlebars')
-const uri = 'mongodb+srv://Alimov_1:PCNHrcIKi1Wxufg6@cluster0.qa2s8y6.mongodb.net/e-commerce'
+const uri = 'mongodb://localhost:27017/e-commerce'
 const path = require('path')
+const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session);
+const flash = require('connect-flash')
+
+const store = new MongoDBStore({
+    uri,
+    collection: 'mySessions',
+    expires: 1000 * 60 * 5 // sessiya shuncha vaqt o'tgandan keyin o'chadi
+});
 
 // require routes
 const homeRouter = require('./routes/home')
@@ -11,6 +20,12 @@ const categoriesRouter = require('./routes/categories')
 const adminsRouter = require('./routes/admins')
 const productsRouter = require('./routes/products')
 const usersRouter = require('./routes/users')
+const authRouter = require('./routes/auth')
+
+// require middlewares
+const adminMiddleware = require('./middleware/admin')
+const isAuth = require('./middleware/isAuth')
+const error = require('./middleware/error')
 
 const hbs = create({
     extname: 'hbs',
@@ -42,12 +57,29 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 
+app.use(session({
+    secret: process.env.SESSION_KEY || 'secretkey',
+    resave: false,
+    saveUninitialized: false,
+    store
+}))
+
+app.use(flash());
+app.use('/auth', authRouter)
+
+// admin use middleware 
+app.use(adminMiddleware)
+app.use(isAuth)
+
 //routing
 app.use('/', homeRouter)
 app.use('/categories', categoriesRouter)
 app.use('/admins', adminsRouter)
 app.use('/products', productsRouter)
 app.use('/users', usersRouter)
+
+// error 404
+app.use(error)
 
 const port = normalizePort(process.env.PORT || 3000)
 app.set('port', port)

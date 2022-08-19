@@ -1,7 +1,10 @@
 <div class="content-header" style="display: flex; justify-content: space-between;">
     <h1>{{title}}</h1>
+    {{#if admin.moderator}}
     <a href="/categories/add" class="btn btn-success btn-sm" style="margin-right: 15px;">Create</a>
+    {{/if}}
 </div>
+
 
 <!-- Main content -->
 <section class="content">
@@ -49,7 +52,9 @@
                             #
                         </td>
                         <td>
-                               <a href="/categories/{{id}}"> {{categoryName}}</a>
+                            <a>
+                                {{categoryName}}
+                            </a>
                             <br />
                             <small>
                                 Created 01.01.2019
@@ -60,6 +65,7 @@
                                 <li class="list-inline-item">
                                     <img alt="Avatar" class="table-avatar" src="{{categoryImg}}">
                                 </li>
+
                             </ul>
                         </td>
                         <td class="project_progress">
@@ -81,22 +87,30 @@
                                 </i>
                                 View
                             </a>
-                            <a class="btn btn-info btn-sm" href="categories/edit/{{id}}">
+                            {{#if admin.moderator}}
+                            <a class="btn btn-info btn-sm" href="#">
                                 <i class="fas fa-pencil-alt">
                                 </i>
                                 Edit
                             </a>
-                            <a class="btn btn-delete btn-sm" href="/categories/delete/{{id}}">
+                            {{/if}}
+
+                             {{#if admin.moderator}}
+                            <a class="btn btn-danger btn-sm" href="#">
                                 <i class="fas fa-trash">
                                 </i>
                                 Delete
                             </a>
+                            {{/if}}
                         </td>
                     </tr>
                     {{/each}}
                 </tbody>
             </table>
         </div>
+        <!-- /.card-body -->
     </div>
+    <!-- /.card -->
+
 </section>
 <!-- /.content -->
